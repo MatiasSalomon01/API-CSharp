@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using TestAPI.Interfaces.Repositories;
 using TestAPI.Models;
 
 namespace TestAPI.Controllers
@@ -9,9 +10,12 @@ namespace TestAPI.Controllers
     public class CityController : Controller
     {
         private readonly ApplicationDbContext _context;
-        public CityController(ApplicationDbContext context)
+        private readonly ICityRepository _cityRepository;
+
+        public CityController(ApplicationDbContext context, ICityRepository cityRepository)
         {
             _context = context;
+            _cityRepository = cityRepository;
         }
 
         [HttpGet("getall")]
