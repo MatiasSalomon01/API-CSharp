@@ -1,11 +1,16 @@
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using TestAPI;
+using TestAPI.Interfaces.Repositories;
+using TestAPI.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddControllers();
+
+//Repositories
+builder.Services.AddScoped<ICityRepository, CityRepository>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

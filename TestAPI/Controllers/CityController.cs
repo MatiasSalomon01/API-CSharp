@@ -21,7 +21,7 @@ namespace TestAPI.Controllers
         [HttpGet("getall")]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _context.City.ToListAsync());
+            return Ok(await _cityRepository.GetAll());
         }
 
         [HttpPost("create-city")]
