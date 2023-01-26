@@ -7,7 +7,7 @@ namespace TestAPI.Models
         public int Id { get; set; }
         public string Name { get; set; }
 
-        [JsonIgnore]
+        //[JsonIgnore]
         public List<City>? Cities { get; set; }
     }
 }

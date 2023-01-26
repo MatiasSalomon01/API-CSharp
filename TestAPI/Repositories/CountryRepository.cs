@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TestAPI.Interfaces.Repositories;
 using TestAPI.Models;
@@ -8,15 +9,16 @@ namespace TestAPI.Repositories
     public class CountryRepository : ICountryRepository
     {
         private readonly ApplicationDbContext _context;
-
-        public CountryRepository(ApplicationDbContext context)
+        private readonly IMapper _mapper;
+        public CountryRepository(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<ICollection<Country>> GetAll()
         {
-            return await _context.Country.OrderBy(c => c.Id).ToListAsync();
+            return await _context.Country.OrderBy(c => c.Id).Include(c => c.Cities).ToListAsync();
         }
 
         public async Task<Country> GetById(int id)

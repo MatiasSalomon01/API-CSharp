@@ -214,3 +214,5 @@ C:\Users\msalomon\source\repos\API-CSharp\TestAPI\obj\Debug\net6.0\refint\TestAP
 C:\Users\msalomon\source\repos\API-CSharp\TestAPI\obj\Debug\net6.0\TestAPI.pdb
 C:\Users\msalomon\source\repos\API-CSharp\TestAPI\obj\Debug\net6.0\TestAPI.genruntimeconfig.cache
 C:\Users\msalomon\source\repos\API-CSharp\TestAPI\obj\Debug\net6.0\ref\TestAPI.dll
+C:\Users\msalomon\source\repos\API-CSharp\TestAPI\bin\Debug\net6.0\AutoMapper.dll
+C:\Users\msalomon\source\repos\API-CSharp\TestAPI\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
