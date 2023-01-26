@@ -55,14 +55,14 @@ namespace TestAPI.Controllers
         [HttpPut("update/{id:int}")]
         public async Task<IActionResult> UpdateCountry(Country country)
         {
-            if(await _countryRepository.UpdateCountry(country))
-            {
-                return Ok(new Response(0, "Country Updated Successfully", DateTime.Now));
-            }
-            else
-            {
-                return NotFound(new Response(1, "Country Not Found", DateTime.Now));
-            }            
+                if(await _countryRepository.UpdateCountry(country))
+                {
+                    return Ok(new Response(0, "Country Updated Successfully", DateTime.Now));
+                }
+                else
+                {
+                    return NotFound(new Response(1, "Country Not Found", DateTime.Now));
+                }            
         }
 
         [HttpDelete("delete/{id:int}")]

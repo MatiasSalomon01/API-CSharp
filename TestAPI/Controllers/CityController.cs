@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.Metrics;
 using TestAPI.Interfaces.Repositories;
 using TestAPI.Models;
+using TestAPI.Repositories;
 
 namespace TestAPI.Controllers
 {
@@ -18,36 +20,59 @@ namespace TestAPI.Controllers
             _cityRepository = cityRepository;
         }
 
-        [HttpGet("getall")]
+        [HttpGet("get_all")]
         public async Task<IActionResult> GetAll()
         {
             return Ok(await _cityRepository.GetAll());
         }
 
-        [HttpPost("create-city")]
+        [HttpGet("get/{id:int}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var result = await _cityRepository.GetById(id);
+
+            if (result == null)
+            {
+                return NotFound(new Response(1, "Unable to Retrieve City " + id, DateTime.Now));
+            }
+            else
+            {
+                return Ok(result);
+            }
+        }
+
+        [HttpPost("create")]
         public async Task<IActionResult> CreateCity([FromBody] City city)
         {
-            var result = await _context.City.AddAsync(city);
-            await _context.SaveChangesAsync();
-            return Ok(new Response(0, "City Created Successfully", DateTime.Now));
+            if (await _cityRepository.CreateCity(city))
+            {
+                return Ok(new Response(0, "City Created Successfully", DateTime.Now));
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
-        [HttpPut("update-city")]
+        [HttpPut("update/{id:int}")]
         public async Task<IActionResult> UpdateCity(City city)
         {
-            _context.City.Update(city);
-            await _context.SaveChangesAsync();
-            return Ok(new Response(0, "City Updated Successfully", DateTime.Now));
+            if (await _cityRepository.UpdateCity(city))
+            {
+                return Ok(new Response(0, "City Updated Successfully", DateTime.Now));
+            }
+            else
+            {
+                return NotFound(new Response(1, "City Not Found", DateTime.Now));
+            }
         }
 
-        [HttpDelete("delete-city")]
+        [HttpDelete("delete")]
         public async Task<IActionResult> DeleteCity(int id)
         {
-            var result = await _context.City.FindAsync(id);
-            if (result != null)
+            var result = await _cityRepository.DeleteCity(id);
+            if (result == true)
             {
-                _context.City.Remove(result);
-                await _context.SaveChangesAsync();
                 return Ok(new Response(0, "City Deleted Successfully", DateTime.Now));
             }
             else
