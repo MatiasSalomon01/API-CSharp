@@ -2,7 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using TestAPI;
 using TestAPI.Interfaces.Repositories;
+using TestAPI.Interfaces.Services;
 using TestAPI.Repositories;
+using TestAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 //Repositories
-builder.Services.AddScoped<ICityRepository, CityRepository>();
+builder.Services.AddTransient<ICityRepository, CityRepository>();
+builder.Services.AddTransient<ICountryRepository, CountryRepository>();
+//builder.Services.AddTransient<ICountryService, CountryService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

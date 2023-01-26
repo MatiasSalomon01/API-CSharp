@@ -16,7 +16,7 @@ namespace TestAPI.Repositories
 
         public async Task<ICollection<City>> GetAll()
         {
-            return await _context.City.ToListAsync();
+            return await _context.City.OrderBy(c => c.Id).ToListAsync();
         }
     }
 }
