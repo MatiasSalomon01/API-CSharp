@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TestAPI.Interfaces.Repositories;
 using TestAPI.Models;
+using TestAPI.Models.DTO;
 
 namespace TestAPI.Repositories
 {
@@ -18,12 +19,12 @@ namespace TestAPI.Repositories
 
         public async Task<ICollection<Country>> GetAll()
         {
-            return await _context.Country.OrderBy(c => c.Id).Include(c => c.Cities).ToListAsync();
+            return await _context.Country.Include(c => c.Cities).OrderBy(c => c.Id).ToListAsync();
         }
 
         public async Task<Country> GetById(int id)
         {
-            var country = await _context.Country.Where(c => c.Id == id).FirstOrDefaultAsync();
+            var country = await _context.Country.Where(c => c.Id == id).Include(c => c.Cities).FirstOrDefaultAsync();
             return country; 
         }
 

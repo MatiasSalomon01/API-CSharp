@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using Microsoft.EntityFrameworkCore.Query.Internal;
+using System.Text.Json.Serialization;
 
 namespace TestAPI.Models
 {
@@ -6,8 +7,6 @@ namespace TestAPI.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-
-        //[JsonIgnore]
         public List<City>? Cities { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using EFCore.BulkExtensions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.Metrics;
 using TestAPI.Interfaces.Repositories;
@@ -9,10 +11,13 @@ namespace TestAPI.Repositories
     public class CityRepository : ICityRepository
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public CityRepository(ApplicationDbContext context)
+
+        public CityRepository(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<ICollection<City>> GetAll()
@@ -26,37 +31,47 @@ namespace TestAPI.Repositories
             return city;
         }
 
-        public async Task<bool> CreateCity(City city)
+        public async Task<Response> CreateCity(City city)
         {
             var countryId = await _context.Country.FindAsync(city.CountryId);
             if (countryId == null)
             {
-                return false;
+                return new Response(1, "Unable to Create City", DateTime.Now);
             }
             else
             {
                 await _context.City.AddAsync(city);
-                return await Save();
+                await Save();
+                return new Response(0, "City Updated Successfully", DateTime.Now);
             }
         }
 
-        public async Task<bool> UpdateCity(City city)
+        public async Task<Response> UpdateCity(City city)
         {
-            _context.City.Update(city);
-            return await Save();
+            if (_context.City.Any(c => c.Id == city.Id && c.CountryId == city.CountryId))
+            {
+               _context.City.Update(city);
+                await Save();
+                return new Response(0, "City Updated Successfully", DateTime.Now);
+            } 
+            else
+            {
+                return new Response(1, "Unable to Update City", DateTime.Now);
+            }
         }
 
-        public async Task<bool> DeleteCity(int id)
+        public async Task<Response> DeleteCity(int id)
         {
             var result = await _context.City.FindAsync(id);
             if (result != null)
             {
                 _context.City.Remove(result);
-                return await Save();
+                await Save();
+                return new Response(0, "City Deleted Successfully", DateTime.Now);
             }
             else
             {
-                return false;
+                return new Response(1, "Unable to Delete City", DateTime.Now);
             }
         }
 

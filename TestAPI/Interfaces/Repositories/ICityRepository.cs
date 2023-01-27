@@ -7,9 +7,9 @@ namespace TestAPI.Interfaces.Repositories
     {
         Task<ICollection<City>> GetAll();
         Task<City> GetById(int id);
-        Task<bool> CreateCity(City city);
-        Task<bool> UpdateCity(City city);
-        Task<bool> DeleteCity(int id);
+        Task<Response> CreateCity(City city);
+        Task<Response> UpdateCity(City city);
+        Task<Response> DeleteCity(int id);
         Task<bool> Save();
     }
 }

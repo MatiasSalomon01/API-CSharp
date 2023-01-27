@@ -8,7 +8,7 @@ namespace TestAPI.Models
         public string Name { get; set; }
         public int CountryId { get; set; }
 
-        [JsonIgnore]
+        //[JsonIgnore]
         public Country? Country { get; set; }
     }
 }

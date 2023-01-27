@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using TestAPI.Models.DTO;
 using TestAPI.Models;
+using TestAPI.Models.DTO.City;
 
 namespace TestAPI.Mapping
 {
@@ -8,7 +8,8 @@ namespace TestAPI.Mapping
     {
         public CityProfile()
         {
-            CreateMap<City, CityDTO>();
+            CreateMap<CityCreateDTO, City>();
+            CreateMap<CityUpdateDTO, City>();
         }
     }
 }

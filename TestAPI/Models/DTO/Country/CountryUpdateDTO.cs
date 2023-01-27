@@ -1,6 +1,6 @@
-﻿namespace TestAPI.Models.DTO
+﻿namespace TestAPI.Models.DTO.Country
 {
-    public class CountryDTO
+    public class CountryUpdateDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }

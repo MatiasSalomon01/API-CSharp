@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using TestAPI.Models;
-using TestAPI.Models.DTO;
+using TestAPI.Models.DTO.Country;
 
 namespace TestAPI.Mapping
 {
@@ -8,7 +8,8 @@ namespace TestAPI.Mapping
     {
         public CountryProfile()
         {
-            CreateMap<Country, CountryDTO>();
+            CreateMap<CountryCreateDTO, Country>();
+            CreateMap<CountryUpdateDTO, Country>();
         }
     }
 }

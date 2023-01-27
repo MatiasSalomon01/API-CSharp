@@ -2,7 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.Metrics;
 using TestAPI.Interfaces.Repositories;
+using TestAPI.Interfaces.Services;
 using TestAPI.Models;
+using TestAPI.Models.DTO.City;
 using TestAPI.Repositories;
 
 namespace TestAPI.Controllers
@@ -11,25 +13,23 @@ namespace TestAPI.Controllers
     [ApiController]
     public class CityController : Controller
     {
-        private readonly ApplicationDbContext _context;
-        private readonly ICityRepository _cityRepository;
+        private readonly ICityService _services;
 
-        public CityController(ApplicationDbContext context, ICityRepository cityRepository)
+        public CityController(ICityService services)
         {
-            _context = context;
-            _cityRepository = cityRepository;
+            _services = services;
         }
 
         [HttpGet("get_all")]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _cityRepository.GetAll());
+            return Ok(await _services.GetAll());
         }
 
         [HttpGet("get/{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var result = await _cityRepository.GetById(id);
+            var result = await _services.GetById(id);
 
             if (result == null)
             {
@@ -42,42 +42,44 @@ namespace TestAPI.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> CreateCity([FromBody] City city)
+        public async Task<IActionResult> CreateCity([FromBody] CityCreateDTO city)
         {
-            if (await _cityRepository.CreateCity(city))
+            var result = await _services.CreateCity(city);
+            if (0.Equals(result.Status))
             {
-                return Ok(new Response(0, "City Created Successfully", DateTime.Now));
+                return Ok(result);
             }
             else
             {
-                return BadRequest();
+                return BadRequest(result);
             }
         }
 
-        [HttpPut("update/{id:int}")]
-        public async Task<IActionResult> UpdateCity(City city)
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdateCity(CityUpdateDTO city)
         {
-            if (await _cityRepository.UpdateCity(city))
+            var result = await _services.UpdateCity(city);
+            if (0.Equals(result.Status))
             {
-                return Ok(new Response(0, "City Updated Successfully", DateTime.Now));
+                return Ok(result);
             }
             else
             {
-                return NotFound(new Response(1, "City Not Found", DateTime.Now));
+                return BadRequest(result);
             }
         }
 
         [HttpDelete("delete")]
         public async Task<IActionResult> DeleteCity(int id)
         {
-            var result = await _cityRepository.DeleteCity(id);
-            if (result == true)
+            var result = await _services.DeleteCity(id);
+            if (0.Equals(result.Status))
             {
-                return Ok(new Response(0, "City Deleted Successfully", DateTime.Now));
+                return Ok(result);
             }
             else
             {
-                return NotFound(new Response(1, "Unable to Delete City", DateTime.Now));
+                return NotFound(result);
             }
         }
     }

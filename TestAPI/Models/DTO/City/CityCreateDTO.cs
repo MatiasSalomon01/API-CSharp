@@ -1,8 +1,7 @@
-﻿namespace TestAPI.Models.DTO
+﻿namespace TestAPI.Models.DTO.City
 {
-    public class CityDTO
+    public class CityCreateDTO
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public int CountryId { get; set; }
     }
