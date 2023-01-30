@@ -1,23 +1,18 @@
-﻿using AutoMapper;
-using EFCore.BulkExtensions;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Diagnostics.Metrics;
+﻿using Microsoft.EntityFrameworkCore;
 using TestAPI.Interfaces.Repositories;
 using TestAPI.Models;
+using TestAPI.Models.DTO.City;
 
 namespace TestAPI.Repositories
 {
     public class CityRepository : ICityRepository
     {
         private readonly ApplicationDbContext _context;
-        private readonly IMapper _mapper;
 
 
-        public CityRepository(ApplicationDbContext context, IMapper mapper)
+        public CityRepository(ApplicationDbContext context)
         {
             _context = context;
-            _mapper = mapper;
         }
 
         public async Task<ICollection<City>> GetAll()
@@ -62,17 +57,17 @@ namespace TestAPI.Repositories
 
         public async Task<Response> DeleteCity(int id)
         {
-            var result = await _context.City.FindAsync(id);
-            if (result != null)
-            {
-                _context.City.Remove(result);
-                await Save();
-                return new Response(0, "City Deleted Successfully", DateTime.Now);
-            }
-            else
-            {
-                return new Response(1, "Unable to Delete City", DateTime.Now);
-            }
+                var result = await _context.City.FindAsync(id);
+                if (result != null)
+                {
+                    _context.City.Remove(result);
+                    await Save();
+                    return new Response(0, "City Deleted Successfully", DateTime.Now);
+                }
+                else
+                {
+                    return new Response(1, "Unable to Delete City", DateTime.Now);
+                }
         }
 
         public async Task<bool> Save()

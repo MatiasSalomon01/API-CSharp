@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore.Query.Internal;
 using TestAPI.Interfaces.Repositories;
 using TestAPI.Interfaces.Services;
 using TestAPI.Models;
 using TestAPI.Models.DTO.City;
-using TestAPI.Repositories;
 
 namespace TestAPI.Services
 {
@@ -19,14 +17,14 @@ namespace TestAPI.Services
             _mapper = mapper;
         }
 
-        public async Task<ICollection<City>> GetAll()
+        public async Task<ICollection<CityGetAllDTO>> GetAll()
         {
-            return await _cityRepository.GetAll();
+            return _mapper.Map<ICollection<CityGetAllDTO>>(await _cityRepository.GetAll());
         }
 
-        public async Task<City> GetById(int id)
+        public async Task<CityGetAllDTO> GetById(int id)
         {
-            return await _cityRepository.GetById(id);
+            return _mapper.Map<CityGetAllDTO>(await _cityRepository.GetById(id));
         }
 
         public async Task<Response> CreateCity(CityCreateDTO city)

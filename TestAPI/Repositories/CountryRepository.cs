@@ -1,20 +1,17 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TestAPI.Interfaces.Repositories;
 using TestAPI.Models;
-using TestAPI.Models.DTO;
 
 namespace TestAPI.Repositories
 {
     public class CountryRepository : ICountryRepository
     {
         private readonly ApplicationDbContext _context;
-        private readonly IMapper _mapper;
-        public CountryRepository(ApplicationDbContext context, IMapper mapper)
+
+        public CountryRepository(ApplicationDbContext context)
         {
             _context = context;
-            _mapper = mapper;
         }
 
         public async Task<ICollection<Country>> GetAll()
@@ -56,7 +53,7 @@ namespace TestAPI.Repositories
 
         public async Task<bool> Save()
         {
-            var saved =await _context.SaveChangesAsync();
+            var saved = await _context.SaveChangesAsync();
             return saved > 0 ? true : false;
         }
     }

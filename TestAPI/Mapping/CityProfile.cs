@@ -10,6 +10,7 @@ namespace TestAPI.Mapping
         {
             CreateMap<CityCreateDTO, City>();
             CreateMap<CityUpdateDTO, City>();
+            CreateMap<City, CityGetAllDTO>();
         }
     }
 }

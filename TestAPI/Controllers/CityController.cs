@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Diagnostics.Metrics;
-using TestAPI.Interfaces.Repositories;
 using TestAPI.Interfaces.Services;
 using TestAPI.Models;
 using TestAPI.Models.DTO.City;
-using TestAPI.Repositories;
 
 namespace TestAPI.Controllers
 {
