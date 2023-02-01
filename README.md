@@ -31,7 +31,7 @@ Instalar Dependencias y Librerías
 
 #### Get List View Dinamic
 
-```http
+```
   GET /v1/api/Cases/list-view-dinamic
 ```
 
