@@ -17,7 +17,7 @@ namespace TestAPI.Controllers
         [HttpGet("get_all")]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _context.Course.Include(c => c.Students).OrderBy(c => c.Id).ToListAsync());
+            return Ok(await _context.Course.Include(c => c.Student).OrderBy(c => c.Id).ToListAsync());
         }
 
         [HttpPost("create")]
